@@ -9,3 +9,6 @@ class CategoryView(APIView):
          category = Category.objects.all()
          serializer = CategorySerializer(category,many=True)
          return Response(serializer.data,status=status.HTTP_200_OK)
+
+
+
