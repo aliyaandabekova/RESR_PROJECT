@@ -6,6 +6,7 @@ class Product(models.Model):
     price = models.FloatField(default=0.0)
     photo = models.ImageField(null=True,blank=True)
     category = models.ForeignKey('Category',on_delete=models.CASCADE)
+    avg_score = models.FloatField(default=0.0)
 
     def __str__(self):
         return self.name
