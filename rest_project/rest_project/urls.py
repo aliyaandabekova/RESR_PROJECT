@@ -21,5 +21,6 @@ urlpatterns = [
     path('',include('userprofile.urls')),
     path('',include('product.urls')),
     path('',include('comments.urls')),
+    path('',include('order.urls'))
 
 ]
