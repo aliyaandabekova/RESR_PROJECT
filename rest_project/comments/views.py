@@ -44,3 +44,5 @@ class RatePostView(APIView):
             return Response('score created!',status=201)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
+
+
