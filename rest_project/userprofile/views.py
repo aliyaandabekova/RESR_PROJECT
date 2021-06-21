@@ -1,8 +1,10 @@
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import *
+from .services import *
 
 
 class ProfileView(APIView):
@@ -10,6 +12,7 @@ class ProfileView(APIView):
     def get(self,request):
         try:
             profile = Profile.objects.get(user=request.user)
+            count_sale(profile)
         except Profile.DoesNotExist:
             return Response('404',status=status.HTTP_404_NOT_FOUND)
         serializer = ProfileSerializer(profile)
@@ -23,3 +26,15 @@ class RegisterView(APIView):
             serializer.save()
             return Response('Successfully register!',status=201)
         return Response(serializer.errors,status=400)
+
+
+class LoginView(APIView):
+    def post(self,request):
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            username = serializer.data.get('username')
+            password = serializer.data.get('password')
+            user = authenticate(username=username,password=password)
+            login(request,user)
+            return Response('welcome')
+        return Response(serializer.errors)
