@@ -18,6 +18,19 @@ class ProfileView(APIView):
         serializer = ProfileSerializer(profile)
         return Response(serializer.data,status=status.HTTP_200_OK)
 
+    def put(self, request):
+        profile = Profile.objects.get(user=request.user)
+        serializer = ProfileSerializer(profile, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response('OK', status=200)
+        return Response(serializer.errors, status=400)
+
+    def delete(self, request):
+        profile = Profile.objects.get(user=request.user)
+        profile.delete()
+        return Response('DELETED', status=200)
+
 
 class RegisterView(APIView):
     def post(self,request):
