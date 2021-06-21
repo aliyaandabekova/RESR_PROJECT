@@ -16,10 +16,15 @@ class OrderSerializer(serializers.ModelSerializer):
             obj.profile.wallet -= total_sum
             obj.profile.order_count += 1
             obj.profile.save()
-        else:
-            raise ValidationError
+
         if obj.profile.sale:
             total_sum = total_sum - (total_sum * obj.profile.sale)
         obj.total_sum = total_sum
         obj.save()
         return total_sum
+
+
+class MyOrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = '__all__'
