@@ -13,4 +13,8 @@ class Order(models.Model):
         ('received','received'),
     ),max_length=10,default='in_process')
     total_sum = models.FloatField(default=0.0)
+    payment_method = models.CharField(choices=(
+        ('cash','cash'),
+        ('wallet','wallet'),
+    ),max_length=10,default='cash')
 
